@@ -13,7 +13,7 @@ fields that can be used by the _distributed GraphQL executor_ to resolve an
 entity by a stable key.
 
 The stable key is defined by the arguments of the field. Only fields that are
-annotated with the `@lookup` directive will be recognized as lookup field.
+annotated with the `@lookup` directive will be recognized as lookup fields.
 
 Source schemas can provide multiple lookup fields for the same entity with
 different keys.
@@ -49,9 +49,9 @@ interface Node @key(fields: "id") {
 ```
 
 Lookup fields may return object, interface or union types. In case a lookup
-field returns an interface or union type all possible object types are
-considered entities and must have keys that correspond with the fields argument
-signature.
+field returns an interface or union type, all possible object types are
+considered entities and must have keys that correspond with the `fields`
+argument signature.
 
 ```graphql example
 type Query {
@@ -72,7 +72,7 @@ type Cat @key(fields: "id categoryId") {
 ```
 
 The following example shows an invalid lookup field as the `Cat` type does not
-declare a key that corresponds with the lookup fields argument signature.
+declare a key that corresponds with the lookup field's argument signature.
 
 ```graphql counter-example
 type Query {
@@ -122,16 +122,16 @@ Lookups can also be nested if they can be reached through other lookups.
 
 ```graphql example
 type Query {
-  organization(id: ID!): Ogranization @lookup
+  organization(id: ID!): Organization @lookup
 }
 
-type Ogranization {
+type Organization {
   repository(name: String!): Repository @lookup
 }
 
 type Repository @key(fields: "id organization { id }") {
   name: String!
-  organization: Ogranization
+  organization: Organization
 }
 ```
 
@@ -159,7 +159,7 @@ extend type Query {
 }
 ```
 
-The `@is` directive also allows to refer to nested fields relative to `Person`.
+The `@is` directive also allows referring to nested fields relative to `Person`.
 
 ```graphql example
 extend type Query {
@@ -167,7 +167,7 @@ extend type Query {
 }
 ```
 
-The `@is` directive not limited to a single argument.
+The `@is` directive is not limited to a single argument.
 
 ```graphql example
 extend type Query {
@@ -193,14 +193,14 @@ object type. This prevents subgraphs from inadvertently defining similarly named
 fields that are semantically not the same.
 
 Fields have to be explicitly marked as `@shareable` to allow multiple subgraphs
-to define it. And it ensures the step of allowing a field to be served from
+to define them. This ensures the step of allowing a field to be served from
 multiple subgraphs is an explicit, coordinated decision.
 
 If multiple subgraphs define the same field, these are assumed to be
 semantically equivalent, and the executor is free to choose between them as it
 sees fit.
 
-Note: Key fields are always considered sharable.
+Note: Key fields are always considered shareable.
 
 ### @require
 
@@ -212,8 +212,7 @@ directive @require(
 
 The `@require` directive is used to express data requirements with other
 subgraphs. Arguments annotated with the `@require` directive are removed from
-the public exposed schema and the value for these will be resolved by the
-executor.
+the public schema and the value for these will be resolved by the executor.
 
 ```graphql example
 type Product {
@@ -249,7 +248,8 @@ type Product {
   delivery(
     zip: String!
     dimension: ProductDimensionInput!
-      @require(field: "{ productSize: dimension.size, productWeight: dimension.weight }"))
+      @require(
+        field: "{ productSize: dimension.size, productWeight: dimension.weight }"))
   ): DeliveryEstimates
 }
 
@@ -272,7 +272,7 @@ directive @provides(fields: SelectionSet!) on FIELD_DEFINITION
 
 The `@provides` directive is an optimization hint specifying child fields that
 can be resolved locally at the given subgraph through a particular query path.
-This allows for a variation of overlapping field to improve data fetching.
+This allows for a variation of overlapping fields to improve data fetching.
 
 ### @external
 
@@ -281,7 +281,7 @@ directive @external on OBJECT_DEFINITION | INTERFACE_DEFINITION | FIELD_DEFINITI
 ```
 
 The `@external` directive is used in combination with the `@provides` directive
-and specifies data that is not owned ba a particular subgraph.
+and specifies data that is not owned by a particular subgraph.
 
 ### @override
 
@@ -289,14 +289,14 @@ and specifies data that is not owned ba a particular subgraph.
 directive @override(from: String!) on FIELD_DEFINITION
 ```
 
-The `@override` directive allows to migrate fields from one subgraph to another.
+The `@override` directive allows migrating fields from one subgraph to another.
 
 ### @internal
 
 ```graphql
-directive @internal on OBJECT | INTERFACE | FIELD_DEFINITION | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION | SCALAR
+directive @internal on ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
 ```
 
 The `@internal` directive signals to the composition process that annotated type
-system members shall not be included into the public schema but still can be
-used by the executor to build resolvers.
+system members shall not be included in the public schema, but can still be used
+by the executor to build resolvers.

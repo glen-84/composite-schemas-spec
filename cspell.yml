@@ -12,7 +12,6 @@ words:
   - structs
   - subselection
   - supergraph
-  - subraphs
   - mergeable
   - birthdate
   - Satisfiability
@@ -29,5 +28,4 @@ words:
   - zuckerberg
 
 ignoreWords:
-  - Aremergeable
   - FXXXX

@@ -2,7 +2,7 @@
 
 **Introduction**
 
-The GraphQL Composite Schemas introduces a comprehensive specification for
+The GraphQL Composite Schemas Spec introduces a comprehensive specification for
 creating distributed GraphQL systems that seamlessly merges multiple GraphQL
 schemas. This specification describes the process of composing a federated
 GraphQL schema and outlines algorithms for executing GraphQL queries on the
@@ -83,7 +83,7 @@ Note: This is an example of a non-normative note.
 
 # [Overview](Section%201%20--%20Overview.md)
 
-# [Subgraph](Section%202%20--%20Source%20Schema.md)
+# [Source Schema](Section%202%20--%20Source%20Schema.md)
 
 # [Supergraph](Section%203%20--%20Supergraph.md)
 

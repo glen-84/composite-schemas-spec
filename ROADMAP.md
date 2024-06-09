@@ -2,7 +2,7 @@
 
 ## Mission
 
-_Provide a specification that allows to build GraphQL Gateways and GraphQL
+_Provide a specification that allows for building GraphQL Gateways and GraphQL
 composition tooling with different implementations and technology stacks to
 interact freely if GraphQL composition tooling and GraphQL gateways are
 compliant._
